@@ -18,6 +18,9 @@ module.exports = controller => app => {
   // Version path
   app.get('/', (_, res) => res.status(200).json(baseResponse(200, `Confere backend version: ${version}`)))
 
+  // Command paths
+  app.post('/transaction', async (req, res) => await controller.run('proccessTransaction', req, res))
+
   // Returning app with configures routes
   return app
 }

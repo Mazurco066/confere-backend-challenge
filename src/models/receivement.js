@@ -16,8 +16,11 @@ module.exports = {
     // Create object fields
     const createObject = (receivementData) => [
       generateField('id', receivementData.id, null, v4()),
+      generateField('transactionId', receivementData.transactionId, null, ''),
       generateField('status', receivementData.status, null, ''),
-      generateField('receivementDate', receivementData.receivementDate, null , '')
+      generateField('receivementDate', receivementData.receivementDate, null , ''),
+      generateField('grossValue', receivementData.grossValue, null , 0),
+      generateField('netValue', receivementData.netValue, null , 0)
     ].reduce((ac, at) => ac = { ...ac, ...at }, {})
 
     // Validate fields
@@ -25,8 +28,11 @@ module.exports = {
       const d = receivementData || {}
       return pipe(
 				validation.validateUUID(d.id, 'receivement "id" is not a valid UUID', true),
+        validation.validateUUID(d.transactionId, 'receivement "transactionId" is not a valid UUID', true),
         validation.validateStatus(d.status, 'receivement "status" must be either "received" or "expected"', true),
-        validation.validate_YYYY_MM_DD(d.receivementDate, 'receivement "receivementDate" is not a valid YYYY_MM_DD date', true)
+        validation.validate_YYYY_MM_DD(d.receivementDate, 'receivement "receivementDate" is not a valid YYYY_MM_DD date', true),
+        validation.validateNumber(d.grossValue, 'receivement "grossValue" must be defined and greater than 0', true),
+        validation.validateNumber(d.netValue, 'receivement "netValue" must be defined and greater than 0', true)
 			)(errors)
     }
 

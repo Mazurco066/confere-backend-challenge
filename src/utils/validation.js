@@ -28,7 +28,7 @@ const validateType = (type, message, mandatory, errors) => {
 // Validates card number
 const validateCardNumber = (number, message, mandatory, errors) => {
 	if (!mandatory && !number) return errors
-	return /^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|(222[1-9]|22[3-9][0-9]|2[3-6][0-9]{2}|27[01][0-9]|2720)[0-9]{12}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11}|62[0-9]{14})$/.test(number)
+	return number.length === 4 || /^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|(222[1-9]|22[3-9][0-9]|2[3-6][0-9]{2}|27[01][0-9]|2720)[0-9]{12}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11}|62[0-9]{14})$/.test(number)
 		? errors
 		: errors.concat([message])
 }
@@ -55,6 +55,14 @@ const validateNumber = (value, message, mandatory, errors) => {
 	return typeof value === 'number' && value > 0 
 		? errors
 		: errors.concat([message])
+}
+
+// Validate if nested object was successfully created
+const validateNestedObject = (nested, _, mandatory, errors) => {
+	if (!mandatory) return errors
+	return nested.length === undefined
+		? errors
+		: errors.concat(nested)
 }
 
 // Validates date format YYYY_MM_DD
@@ -88,6 +96,7 @@ const validateArray = (array, message, errors) => {
 
 // Exporting
 module.exports = {
+	validateNestedObject: curry(validateNestedObject),
 	validateCardNumber: curry(validateCardNumber),
 	validateCvv: curry(validateCvv),
 	validateExpirity: curry(validateExpirity),

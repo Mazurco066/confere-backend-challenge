@@ -10,7 +10,20 @@ module.exports = (interfaces) => ({
   run: async (methodName, req, res) => {
     // Avaliable requisitions
     const requisition = {
-
+      // POST to store or update developer
+      proccessTransaction: async (req) => {
+        const { value, description, type, installments, card } = req.body
+        const r = await interfaces.commandsEntry.run('proccessTransaction', {
+          transactionData: {
+            value,
+            description,
+            type,
+            installments,
+            card
+          }
+        })
+        return r
+      }
     }
     // Global error treatment
     try {

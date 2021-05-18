@@ -2,6 +2,7 @@
 const { v4 } = require('uuid')
 const { generateField, immutable, validation } = require('../utils')
 const { pipe } = require('ramda')
+const card = require('./card')
 
 // Transaction model
 module.exports = {
@@ -14,23 +15,31 @@ module.exports = {
     if (!transactionData) return { data: null, errors: ['invalid transactionData'] }
 
     // Create object fields
-    const createObject = (transactionData) => [
-      generateField('id', transactionData.id, null, v4()),
-      generateField('value', transactionData.value, null, ''),
-      generateField('description', transactionData.description, null , ''),
-      generateField('type', transactionData.type, null , ''),
-      generateField('installments', transactionData.installments, null , null)
-    ].reduce((ac, at) => ac = { ...ac, ...at }, {})
+    const createObject = (transactionData) => {
+      // Creating card object
+      const cardObject = card.create(transactionData.card)
+
+      // Returning fields
+      return [
+        generateField('id', transactionData.id, null, v4()),
+        generateField('value', transactionData.value, null, ''),
+        generateField('description', transactionData.description, null , ''),
+        generateField('type', transactionData.type, null , ''),
+        generateField('installments', transactionData.installments, null , null),
+        generateField('card', cardObject.data ? cardObject.data : cardObject.errors , null, null)
+      ].reduce((ac, at) => ac = { ...ac, ...at }, {})
+    }
 
     // Validate fields
     const validateFields = (transactionData, errors) => {
       const d = transactionData || {}
       return pipe(
 				validation.validateUUID(d.id, 'transaction "id" is not a valid UUID', true),
-        validation.validateStatus(d.value, 'transaction "value" must be defined and greater than 0', true),
+        validation.validateNumber(d.value, 'transaction "value" must be defined and greater than 0', true),
         validation.validateDescription(d.description, 'transaction "description" must be defined and have between 2 and 250 chars', true),
         validation.validateType(d.type, 'transaction "type" must be either "debit", "installment_credit" or "credit"', true),
-        validation.validateNumber(d.installments, 'transaction "installments" must be greater then 0 if exists', false)
+        validation.validateNumber(d.installments, 'transaction "installments" must be greater then 0 if exists', false),
+        validation.validateNestedObject(d.card, null, true)
 			)(errors)
     }
 
