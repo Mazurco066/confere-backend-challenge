@@ -11,12 +11,7 @@ const { mongoConnection, interfaces, repositories } = require('./api/config/serv
 module.exports = async () => {
   // Generate app services
   const createServices = async (connection) => {
-		const _c = compose(
-			andThen(controller),
-			andThen(interfaces),
-			andThen(repositories),
-			mongoConnection
-		)
+		const _c = compose(andThen(controller),	andThen(interfaces), andThen(repositories), mongoConnection)
 		const _controller = await _c(connection)
 		return _controller
 	}
@@ -32,10 +27,7 @@ module.exports = async () => {
 	}
 
   // Generate Express app
-  const generateApp = compose(
-		andThen(configApp),
-		createServices
-	)
+  const generateApp = compose(andThen(configApp), createServices)
 	const _app = await generateApp(connection)
 
   // Returning app instance
