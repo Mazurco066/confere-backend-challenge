@@ -33,6 +33,8 @@ yarn start
 
 Here are the endpoints this application contains:
 
+**BaseURL:** https://guarded-badlands-04930.herokuapp.com/
+
 ### [GET] Version
 path: /
 
