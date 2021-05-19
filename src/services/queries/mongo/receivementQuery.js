@@ -30,5 +30,26 @@ module.exports = (connection) => ({
     .toArray()
     if (r.length) return baseResponse(200, 'Receivement list found', {}, { list: r })
     return baseResponse(404, 'No receivements found')
+  },
+
+  // Method to list balance from mongo
+  balance: async function (receivementFilter) {
+    // Params
+    const { today } = receivementFilter
+    // Received
+    const received = await connection.collection('Receivements').find({
+      receivementDate: { $lte: today }
+    }).toArray()
+    // Expected
+    const expected = await connection.collection('Receivements').find({
+      receivementDate: { $gt: today }
+    }).toArray()
+    // Returning
+    if (received.length || expected.length)
+      return baseResponse(200, 'Balance list found', {}, {
+        received: received,
+        expected: expected
+      })
+    return baseResponse(404, 'No balance found')
   }
 })

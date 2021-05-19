@@ -50,6 +50,15 @@ module.exports = (interfaces) => ({
           }
         })
         return r
+      },
+      // GET to retrieve balance list
+      listBalance: async(req) => {
+        const r = await interfaces.queriesEntry.run('listBalance', {
+          receivementFilter: {
+            
+          }
+        })
+        return r
       }
     }
     // Global error treatment

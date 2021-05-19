@@ -1,7 +1,7 @@
 // Dependencies
 const { commandsEntry, queriesEntry } = require('../../../interfaces')
 const { proccessTransaction } = require('../../../interfaces/commands')
-const { listReceivables, listTransactions } = require('../../../interfaces/queries')
+const { listBalance, listReceivables, listTransactions } = require('../../../interfaces/queries')
 
 /**
  * Create user interaction interfaces
@@ -20,6 +20,7 @@ module.exports = (repositories) => {
 
   // Queries list
   const _queries = {
+    listBalance: listBalance(receivementQuery),
     listReceivables: listReceivables(receivementQuery),
     listTransactions: listTransactions(transactionQuery)
   }

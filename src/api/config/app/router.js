@@ -24,7 +24,8 @@ module.exports = controller => app => {
   // Query paths
   app.get('/transactions', async (req, res) => await controller.run('listTransactions', req, res))
   app.get('/receivables', async (req, res) => await controller.run('listReceivables', req, res))
-  
+  app.get('/balance', async (req, res) => await controller.run('listBalance', req, res))
+
   // Returning app with configures routes
   return app
 }

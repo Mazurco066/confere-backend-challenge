@@ -99,11 +99,11 @@ module.exports = ( transactionRepository, receivementRepository) => ({
     } = data
     
     // Generates just one receivement
-    const generateSingleReceivement = status => {
+    const generateSingleReceivement = (status, days = 0) => {
       const today = moment()
       const r = receivement.create({
         status: status,
-        receivementDate: today.add(30, 'days').format('YYYY-MM-DD'),
+        receivementDate: today.add(days, 'days').format('YYYY-MM-DD'),
         transactionId: id,
         grossValue: value,
         netValue: feeValue
@@ -118,7 +118,7 @@ module.exports = ( transactionRepository, receivementRepository) => ({
       return generateSingleReceivement('received')
     } else {
       if (installments === 1) {
-        return generateSingleReceivement('expected')
+        return generateSingleReceivement('expected', 30)
       } else {
         const r = []
         
