@@ -31,11 +31,12 @@ yarn start
 
 Here are the endpoints this application contains:
 
-### [GET] Verion
+### [GET] Version
 path: /
 
 ### [POST] Store Transaction
 path: /transaction
+
 body example:
 
 ```json
@@ -74,9 +75,10 @@ path: /receivables
 
 ### [GET] Get Balance
 path: /balance
-query: {
-  
-}
+| Query Param | Type       | Value                                             | Default Value |
+|-------------|------------|---------------------------------------------------|---------------|
+| fromDate    | YYYY-MM-DD | fromDate interval filter, must not be used alone. |               |
+| toDate      | YYYY-MM-DD | toDate interval filter, must not be used alone    |               |
 
 ### License
 

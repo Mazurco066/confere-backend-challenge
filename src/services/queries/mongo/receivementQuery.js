@@ -35,14 +35,29 @@ module.exports = (connection) => ({
   // Method to list balance from mongo
   balance: async function (receivementFilter) {
     // Params
-    const { today } = receivementFilter
+    const { today, toDate, fromDate } = receivementFilter
+    // Optional
+    const opFilters = []
+    if (toDate && fromDate) opFilters.push(
+      { 
+        receivementDate: {
+          $gte: fromDate, $lte: toDate
+        }
+      }
+    )
     // Received
     const received = await connection.collection('Receivements').find({
-      receivementDate: { $lte: today }
+      $and: [
+        ...opFilters,
+        { receivementDate: { $lte: today } }
+      ]
     }).toArray()
     // Expected
     const expected = await connection.collection('Receivements').find({
-      receivementDate: { $gt: today }
+      $and: [
+        ...opFilters,
+        { receivementDate: { $gt: today } }
+      ]
     }).toArray()
     // Returning
     if (received.length || expected.length)

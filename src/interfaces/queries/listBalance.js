@@ -22,9 +22,24 @@ module.exports = (receivementQuery) => ({
 
   // Validating parameters
 	validateParameter: function (data) {
-		if (!data || 	typeof data.receivementFilter === 'undefined') {
+		// Common
+		if (!data || typeof data.receivementFilter === 'undefined') {
 			return baseResponse(400, 'invalid parameter: {receivementFilter: Object}', data )
 		}
+
+		// Optional interval
+		const { fromDate, toDate } = data.receivementFilter
+		if ((fromDate && !toDate) || (toDate && !fromDate)) {
+			return baseResponse(400, 'invalid parameter: if you inform fromDate or toDate you must inform the other param to form a interval', data )
+		}
+		if (fromDate && !is_YYYY_MM_DD(fromDate)) {
+			return baseResponse(400, 'invalid parameter: fromDate must be on YYYY-MM-DD format', data )
+		}
+		if (toDate && !is_YYYY_MM_DD(toDate)) {
+			return baseResponse(400, 'invalid parameter: toDate must be on YYYY-MM-DD format', data )
+		}
+
+		// OK
 		return baseResponse (200, 'valid parameter.', data)
 	},
 

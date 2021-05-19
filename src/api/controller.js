@@ -53,9 +53,11 @@ module.exports = (interfaces) => ({
       },
       // GET to retrieve balance list
       listBalance: async(req) => {
+        const { fromDate, toDate } = req.query
         const r = await interfaces.queriesEntry.run('listBalance', {
           receivementFilter: {
-            
+            fromDate: fromDate ? fromDate : '',
+            toDate: toDate ? toDate : '',
           }
         })
         return r
