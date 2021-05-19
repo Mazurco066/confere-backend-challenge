@@ -1,11 +1,15 @@
 // Express app
 const initApp = require('./app')
+const { config } = require('dotenv')
+
+// Setup env
+config()
 
 // Starting the API
 initApp().then(server => {
 
   // Server listen
-  server.listen(3001, () => {
+  server.listen(process.env.PORT || 3001, () => {
     console.log('Confere backend is running on http://localhost:3001')
   })
 
