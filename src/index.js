@@ -10,7 +10,7 @@ initApp().then(server => {
 
   // Server listen
   server.listen(process.env.PORT || 3001, () => {
-    console.log('Confere backend is running on http://localhost:3001')
+    console.log(`Confere backend is running on http://localhost:${process.env.PORT || 3001}`)
   })
 
 // Error during inicialization
