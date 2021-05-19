@@ -21,6 +21,10 @@ module.exports = controller => app => {
   // Command paths
   app.post('/transaction', async (req, res) => await controller.run('proccessTransaction', req, res))
 
+  // Query paths
+  app.get('/transactions', async (req, res) => await controller.run('listTransactions', req, res))
+  app.get('/receivables', async (req, res) => await controller.run('listReceivables', req, res))
+  
   // Returning app with configures routes
   return app
 }

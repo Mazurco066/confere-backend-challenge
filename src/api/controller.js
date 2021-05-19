@@ -23,6 +23,33 @@ module.exports = (interfaces) => ({
           }
         })
         return r
+      },
+      // GET to retrieve transactions list
+      listTransactions: async(req) => {
+        const { type, description, limit, offset } = req.query
+        const r = await interfaces.queriesEntry.run('listTransactions', {
+          transactionFilter: {
+            type,
+            description,
+            limit: limit ? parseInt(limit) : 0,
+            offset: offset ? parseInt(offset) : 0
+          }
+        })
+        return r
+      },
+      // GET to retrieve receivables list
+      listReceivables: async(req) => {
+        const { fromDate, toDate, status, limit, offset } = req.query
+        const r = await interfaces.queriesEntry.run('listReceivables', {
+          receivementFilter: {
+            status,
+            fromDate: fromDate ? fromDate : '',
+            toDate: toDate ? toDate : '',
+            limit: limit ? parseInt(limit) : 0,
+            offset: offset ? parseInt(offset) : 0
+          }
+        })
+        return r
       }
     }
     // Global error treatment
