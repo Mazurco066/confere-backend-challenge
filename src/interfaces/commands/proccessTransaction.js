@@ -34,6 +34,7 @@ module.exports = ( transactionRepository, receivementRepository) => ({
 
   // Validating parameters
 	validateParameter: function (data) {
+    // Common rules
 		if (
 			!data || 
 			typeof data.transactionData === 'undefined' ||
@@ -44,6 +45,17 @@ module.exports = ( transactionRepository, receivementRepository) => ({
 		) {
 			return baseResponse(400, 'invalid parameter: {transactionData: Object}', data )
 		}
+
+    // Custom rules
+    const { type, installments } = data.transactionData
+    if (type === 'debit' && installments !== undefined) {
+      return baseResponse(400, 'invalid parameter: installments must null on debit type', data )
+    }
+    if (type === 'credit' && (installments === undefined || installments === null)) {
+      return baseResponse(400, 'invalid parameter: installments must be 1 or greater on credit type', data )
+    }
+
+    // Ok
 		return baseResponse (200, 'valid parameter.', data)
 	},
 
