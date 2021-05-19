@@ -2,9 +2,11 @@
 
 A NodeJS app developed by [@Mazurco066](https://github.com/Mazurco066).
 
+This API consists in a minimalist version of Payment Service Provider (PSP).
+
 ## Libraries and Structure
 
-A Job application app using the functional programming paradigm, there aere some libs i used:
+A Job application app using the functional programming paradigm, there are libs that I used:
 
 * **Ramda**
 * **MongoDb**
@@ -20,7 +22,7 @@ Assuming you have [yarn](https://yarnpkg.com/), run the following commands to in
 # Install nodejs dependencies
 yarn install
 
-# Do not forget to setup your .env file based on .env.example
+# Do not forget to setup your .env file based on .env.example before running the command below
 yarn local
 
 # For production build run
