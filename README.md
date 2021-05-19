@@ -4,7 +4,7 @@ A NodeJS app developed by [@Mazurco066](https://github.com/Mazurco066).
 
 ## Libraries and Structure
 
-A Job application app using the functional programming paradigm, libs i used:
+A Job application app using the functional programming paradigm, there aere some libs i used:
 
 * **Ramda**
 * **MongoDb**

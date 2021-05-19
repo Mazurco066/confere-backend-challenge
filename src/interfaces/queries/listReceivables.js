@@ -1,5 +1,5 @@
 // Dependencies
-const { baseResponse, pipeline } = require('../../utils')
+const { baseResponse, pipeline, is_YYYY_MM_DD } = require('../../utils')
 
 // Query
 module.exports = (receivementQuery) => ({
@@ -20,9 +20,21 @@ module.exports = (receivementQuery) => ({
 
   // Validating parameters
 	validateParameter: function (data) {
+		// Common parameters
 		if (!data || 	typeof data.receivementFilter === 'undefined') {
 			return baseResponse(400, 'invalid parameter: {receivementFilter: Object}', data )
 		}
+		
+		// Optional filters
+		const { fromDate, toDate } = data.receivementFilter
+		if (fromDate && !is_YYYY_MM_DD(fromDate)) {
+			return baseResponse(400, 'invalid parameter: fromDate must be on YYYY-MM-DD format', data )
+		}
+		if (toDate && !is_YYYY_MM_DD(toDate)) {
+			return baseResponse(400, 'invalid parameter: toDate must be on YYYY-MM-DD format', data )
+		}
+
+		// Ok	
 		return baseResponse (200, 'valid parameter.', data)
 	},
 
