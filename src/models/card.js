@@ -25,7 +25,7 @@ module.exports = {
       const d = cardData || {}
       return pipe(
         validation.validateCardNumber(d.number, 'card "number" must not be invalid', true),
-        validation.validateExpirity(d.expiry, 'card "expiry" must not be invalid', true),
+        validation.validateExpiry(d.expiry, 'card "expiry" must not be invalid', true),
         validation.validateCvv(d.cvv, 'card "cvv" must not be invalid', true),
         validation.validateDescription(d.holder, 'card "holder" must be defined and have between 2 and 250 chars', false)
 			)(errors)

@@ -42,7 +42,7 @@ const validateCvv = (cvv, message, mandatory, errors) => {
 }
 
 // Validates expirity
-const validateExpirity = (value, message, mandatory, errors) => {
+const validateExpiry = (value, message, mandatory, errors) => {
 	if (!mandatory && !value) return errors
 	return /^(0[1-9]|1[0-2])\/?([0-9]{4}|[0-9]{2})$/.test(value)
 		? errors
@@ -99,7 +99,7 @@ module.exports = {
 	validateNestedObject: curry(validateNestedObject),
 	validateCardNumber: curry(validateCardNumber),
 	validateCvv: curry(validateCvv),
-	validateExpirity: curry(validateExpirity),
+	validateExpiry: curry(validateExpiry),
 	validateDescription: curry(validateDescription),
 	validateStatus: curry(validateStatus),
 	validateType: curry(validateType),
