@@ -63,7 +63,7 @@ path: /transactions
 | limit       | number | Register limit per page, use 0 if you dont want pagination. | 0             |
 | offset      | number | Cursor position at pagination, use aling limit param.       | 0             |
 | type        | string | "debit" or "credit", use to filter register by type         |               |
-| toDate      | string | Regex to filter transactions by description                 |               |
+| description | string | Regex to filter transactions by description                 |               |
 
 ### [GET] List Receivables
 path: /receivables
